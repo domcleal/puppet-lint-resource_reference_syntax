@@ -55,4 +55,28 @@ describe 'resource_reference_without_whitespace' do
     end
   end
 
+  context 'a resource collector' do
+    let(:code) { "Sshkey <<| tag == $primary_server |>>" }
+
+    it 'should detect no problem' do
+      expect(problems).to have(0).problem
+    end
+  end
+
+  context 'a resource collector with namespaced define' do
+    let(:code) { "Sshkeys::Set_authorized_key <<| tag == $primary_server |>>" }
+
+    it 'should detect no problem' do
+      expect(problems).to have(0).problem
+    end
+  end
+
+  context 'a resource collector with namespaced define and hash access' do
+    let(:code) { "Sshkeys::Set_authorized_key <<| tag == $::facts[fqdn] |>>" }
+
+    it 'should detect no problem' do
+      expect(problems).to have(0).problem
+    end
+  end
+
 end
